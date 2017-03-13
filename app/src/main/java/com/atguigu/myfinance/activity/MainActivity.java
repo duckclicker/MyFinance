@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -31,7 +33,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//放在setContentView加载之前---------------------------------------------
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
 
 
@@ -115,12 +122,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean isDoulbe = false;
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            if (isDoulbe){
+            if (isDoulbe) {
                 //退出
                 finish();
             }
@@ -132,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     isDoulbe = false;
                 }
-            },2000);
+            }, 2000);
 
 //            CountDownTimer timer = new CountDownTimer(10000, 1000) {
 //              第一个参数是总时间 第二个参数间隔时间

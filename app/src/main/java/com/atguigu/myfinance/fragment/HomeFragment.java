@@ -3,11 +3,15 @@ package com.atguigu.myfinance.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.atguigu.myfinance.R;
+import com.atguigu.myfinance.command.AppNetConfig;
+import com.atguigu.myfinance.utils.LoadNet;
+import com.atguigu.myfinance.utils.LoadNetHttp;
 
 /**
  * Created by Administrator on 2017/3/10.
@@ -21,6 +25,27 @@ public class HomeFragment extends Fragment {
 
         View view = View.inflate(getActivity(), R.layout.fragment_home, null);
         return view;
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initDataFromNet();
+    }
+
+    private void initDataFromNet() {
+        LoadNet.getDataPost(AppNetConfig.INDEX, new LoadNetHttp() {
+            @Override
+            public void onSuccess(String content) {
+                Log.e("TAG", "onSuccess" + content);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e("TAG", "onFailure" + error);
+            }
+        });
 
     }
 }
